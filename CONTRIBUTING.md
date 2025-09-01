@@ -125,3 +125,12 @@ make list
 - [Локальная инсталляция](https://gitlab.dvmn.org/root/fastapi-articles/-/wikis/fastai/backend_local_installation.drawio.png)
 - [Prod инсталляция](https://gitlab.dvmn.org/root/fastapi-articles/-/wikis/fastai/backend_prod_installation.drawio.png)
 - [Разбиение бэкенда на подсистемы](https://gitlab.dvmn.org/root/fastapi-articles/-/wikis/fastai/backend_decomposition.drawio.png)
+
+## Фронтенд
+
+### Установка фронтенда
+
+- Скачать [архив с скомпилированным фронтендом](https://dvmn.org/filer/canonical/1750917110/1035/)
+- Файлы архива добавлены в папку `static` рядом с `main.py`.
+
+Коммитить файла фронтенда в репозиторий не надо, им занимается отдельная команда.
