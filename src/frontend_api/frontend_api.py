@@ -3,7 +3,12 @@ from fastapi import FastAPI
 frontend_app = FastAPI(title="FrontendAPI")
 
 
-@frontend_app.get("/users/me")
+@frontend_app.get(
+    "/users/me",
+    summary="Получить учетные данные текущего пользователя",
+    response_description="Данные пользователя",
+    tags=["Users"],
+)
 def get_current_user():
     return {
         "profileId": 1,
