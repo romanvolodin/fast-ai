@@ -1,9 +1,13 @@
+import asyncio
 from datetime import datetime
 from typing import Annotated
 
 from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from pydantic.alias_generators import to_camel
+
+from .mocks import mock_html
 
 frontend_app = FastAPI(title="FrontendAPI")
 
@@ -83,6 +87,26 @@ class SiteResponse(BaseModel):
     )
 
 
+class Prompt(BaseModel):
+    prompt: str
+
+    model_config = ConfigDict(
+        json_schema_extra={
+            "examples": [
+                {
+                    "prompt": "Сайт любителей играть в хоккей",
+                },
+            ],
+        },
+    )
+
+
+async def mock_generate_html():
+    for line in mock_html.split("\n")[:50]:
+        await asyncio.sleep(0.1)
+        yield line
+
+
 @frontend_app.get(
     "/users/me",
     summary="Получить учетные данные текущего пользователя",
@@ -118,3 +142,15 @@ def create_site(site: CreateSiteRequest) -> SiteResponse:
         "createdAt": "2025-09-02T09:40:00+03:00",
         "updatedAt": "2025-09-02T09:40:00+03:00",
     }
+
+
+@frontend_app.post(
+    "/sites/{site_id}/generate",
+    summary="Сгенерировать HTML код сайта",
+    tags=["Sites"],
+)
+def generate_site(site_id: int, prompt: Prompt | None = None) -> str:
+    return StreamingResponse(
+        content=mock_generate_html(),
+        media_type="text/html; charset=utf-8",
+    )
