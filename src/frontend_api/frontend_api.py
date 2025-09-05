@@ -8,6 +8,7 @@ from pydantic.alias_generators import to_camel
 frontend_app = FastAPI(title="FrontendAPI")
 
 UserName = Annotated[str, Field(min_length=3, max_length=100)]
+SiteTitle = Annotated[str, Field(max_length=128)]
 
 
 class UserResponse(BaseModel):
@@ -36,6 +37,52 @@ class UserResponse(BaseModel):
     )
 
 
+class CreateSiteRequest(BaseModel):
+    title: SiteTitle | None = None
+    prompt: str
+
+    model_config = ConfigDict(
+        json_schema_extra={
+            "examples": [
+                {
+                    "title": "Фан клуб игры в домино",
+                    "prompt": "Сайт любителей играть в домино",
+                },
+            ],
+        },
+    )
+
+
+class SiteResponse(BaseModel):
+    site_id: int
+    title: SiteTitle | None
+    prompt: str
+    screenshot_url: str | None
+    html_code_url: str | None
+    html_code_download_url: str | None
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+        json_schema_extra={
+            "examples": [
+                {
+                    "siteId": 1,
+                    "title": "Фан клуб игры в домино",
+                    "prompt": "Сайт любителей играть в домино",
+                    "screenshotUrl": "http://example.com/media/index.png",
+                    "html_code_url": "http://example.com/media/index.html",
+                    "html_code_download_url": "http://example.com/media/index.html?response-content-disposition=attachment",
+                    "createdAt": "2025-09-02T09:40:00+03:00",
+                    "updatedAt": "2025-09-02T09:40:00+03:00",
+                },
+            ],
+        },
+    )
+
+
 @frontend_app.get(
     "/users/me",
     summary="Получить учетные данные текущего пользователя",
@@ -51,4 +98,23 @@ def get_current_user() -> UserResponse:
         "registeredAt": "2025-09-02T09:40:00+03:00",
         "updatedAt": "2025-09-02T09:40:00+03:00",
         "isActive": True,
+    }
+
+
+@frontend_app.post(
+    "/sites/create",
+    summary="Создать сайт",
+    tags=["Sites"],
+    response_model=SiteResponse,
+)
+def create_site(site: CreateSiteRequest) -> SiteResponse:
+    return {
+        "siteId": 100500,
+        "title": "Фан клуб игры в домино",
+        "prompt": "Сайт любителей играть в домино",
+        "screenshotUrl": "http://example.com/media/index.png",
+        "html_code_url": "http://example.com/media/index.html",
+        "html_code_download_url": "http://example.com/media/index.html?response-content-disposition=attachment",
+        "createdAt": "2025-09-02T09:40:00+03:00",
+        "updatedAt": "2025-09-02T09:40:00+03:00",
     }
