@@ -154,3 +154,22 @@ def generate_site(site_id: int, prompt: Prompt | None = None) -> str:
         content=mock_generate_html(),
         media_type="text/html; charset=utf-8",
     )
+
+
+@frontend_app.get(
+    "/sites/{site_id}",
+    summary="Получить сайт по id",
+    tags=["Sites"],
+    response_model=SiteResponse,
+)
+def get_site_by_id(site_id: int) -> SiteResponse:
+    return {
+        "siteId": 100500,
+        "title": "Фан клуб игры в домино",
+        "prompt": "Сайт любителей играть в домино",
+        "screenshotUrl": "http://example.com/media/index.png",
+        "html_code_url": "http://example.com/media/index.html",
+        "html_code_download_url": "http://example.com/media/index.html?response-content-disposition=attachment",
+        "createdAt": "2025-09-02T09:40:00+03:00",
+        "updatedAt": "2025-09-02T09:40:00+03:00",
+    }
