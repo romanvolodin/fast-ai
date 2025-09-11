@@ -448,4 +448,4 @@ mock_html = """
 async def mock_generate_html():
     for line in mock_html.split("\n")[:50]:
         await asyncio.sleep(0.1)
-        yield line
+        yield f"{line}\n"
