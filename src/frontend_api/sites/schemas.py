@@ -53,6 +53,41 @@ class SiteResponse(BaseModel):
     )
 
 
+class GeneratedSitesResponse(BaseModel):
+    sites: list[SiteResponse]
+
+    model_config = ConfigDict(
+        json_schema_extra={
+            "examples": [
+                {
+                    "sites": [
+                        {
+                            "id": 1,
+                            "title": "Фан клуб игры в регби",
+                            "prompt": "Сайт любителей играть в регби",
+                            "screenshotUrl": "http://example.com/media/index.png",
+                            "html_code_url": "http://example.com/media/index.html",
+                            "html_code_download_url": "http://example.com/media/index.html?response-content-disposition=attachment",
+                            "createdAt": "2025-09-02T09:40:00+03:00",
+                            "updatedAt": "2025-09-02T09:40:00+03:00",
+                        },
+                        {
+                            "id": 2,
+                            "title": "Фан клуб игры в теннис",
+                            "prompt": "Сайт любителей играть в теннис",
+                            "screenshotUrl": "http://example.com/media/index.png",
+                            "html_code_url": "http://example.com/media/index.html",
+                            "html_code_download_url": "http://example.com/media/index.html?response-content-disposition=attachment",
+                            "createdAt": "2025-09-02T09:40:00+03:00",
+                            "updatedAt": "2025-09-02T09:40:00+03:00",
+                        },
+                    ],
+                },
+            ],
+        },
+    )
+
+
 class Prompt(BaseModel):
     prompt: str
 

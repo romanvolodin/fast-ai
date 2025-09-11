@@ -2,7 +2,7 @@ from fastapi.responses import StreamingResponse
 from fastapi.routing import APIRouter
 
 from .mocks import mock_generate_html
-from .schemas import CreateSiteRequest, Prompt, SiteResponse
+from .schemas import CreateSiteRequest, GeneratedSitesResponse, Prompt, SiteResponse
 
 router = APIRouter(
     prefix="/sites",
@@ -15,31 +15,33 @@ router = APIRouter(
 @router.get(
     "/my",
     summary="Получить список сайтов для текущего пользователя",
-    response_model=list[SiteResponse],
+    response_model=GeneratedSitesResponse,
 )
-def get_current_user_sites() -> list[SiteResponse]:
-    return [
-        {
-            "id": 100500,
-            "title": "Фан клуб игры в домино",
-            "prompt": "Сайт любителей играть в домино",
-            "screenshotUrl": "http://example.com/media/index.png",
-            "html_code_url": "http://example.com/media/index.html",
-            "html_code_download_url": "http://example.com/media/index.html?response-content-disposition=attachment",
-            "createdAt": "2025-09-02T09:40:00+03:00",
-            "updatedAt": "2025-09-02T09:40:00+03:00",
-        },
-        {
-            "id": 100600,
-            "title": "Фан клуб игры в хоккей",
-            "prompt": "Сайт любителей играть в хоккей",
-            "screenshotUrl": "http://example.com/media/index.png",
-            "html_code_url": "http://example.com/media/index.html",
-            "html_code_download_url": "http://example.com/media/index.html?response-content-disposition=attachment",
-            "createdAt": "2025-09-02T09:40:00+03:00",
-            "updatedAt": "2025-09-02T09:40:00+03:00",
-        },
-    ]
+def get_current_user_sites() -> GeneratedSitesResponse:
+    return {
+        "sites": [
+            {
+                "id": 100500,
+                "title": "Фан клуб игры в домино",
+                "prompt": "Сайт любителей играть в домино",
+                "screenshotUrl": "http://example.com/media/index.png",
+                "html_code_url": "http://example.com/media/index.html",
+                "html_code_download_url": "http://example.com/media/index.html?response-content-disposition=attachment",
+                "createdAt": "2025-09-02T09:40:00+03:00",
+                "updatedAt": "2025-09-02T09:40:00+03:00",
+            },
+            {
+                "id": 100600,
+                "title": "Фан клуб игры в хоккей",
+                "prompt": "Сайт любителей играть в хоккей",
+                "screenshotUrl": "http://example.com/media/index.png",
+                "html_code_url": "http://example.com/media/index.html",
+                "html_code_download_url": "http://example.com/media/index.html?response-content-disposition=attachment",
+                "createdAt": "2025-09-02T09:40:00+03:00",
+                "updatedAt": "2025-09-02T09:40:00+03:00",
+            },
+        ],
+    }
 
 
 @router.post(
