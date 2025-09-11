@@ -1,3 +1,5 @@
+import asyncio
+
 mock_html = """
 <!DOCTYPE html>
 <html lang="en">
@@ -441,3 +443,9 @@ mock_html = """
     </body>
 </html>
 """
+
+
+async def mock_generate_html():
+    for line in mock_html.split("\n")[:50]:
+        await asyncio.sleep(0.1)
+        yield line
