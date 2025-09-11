@@ -4,7 +4,7 @@ from typing import Annotated
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from pydantic.alias_generators import to_camel
 
-UserName = Annotated[str, Field(min_length=3, max_length=100)]
+UserName = Annotated[str, Field(min_length=3, max_length=254)]
 
 
 class UserResponse(BaseModel):
