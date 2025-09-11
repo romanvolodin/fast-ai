@@ -143,6 +143,8 @@ make list
 
 ```json
 {
-  "backendBaseUrl": "/frontend-api/"
+  "backendBaseUrl": "/frontend-api"
 }
 ```
+
+ВАЖНО: В конце не должно быть слэша
