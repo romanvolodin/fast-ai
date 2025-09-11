@@ -1,6 +1,6 @@
 from fastapi.routing import APIRouter
 
-from .schemas import UserResponse
+from .schemas import UserDetailsResponse
 
 router = APIRouter(
     prefix="/users",
@@ -14,9 +14,9 @@ router = APIRouter(
     "/me",
     summary="Получить учетные данные текущего пользователя",
     response_description="Данные пользователя",
-    response_model=UserResponse,
+    response_model=UserDetailsResponse,
 )
-def get_current_user() -> UserResponse:
+def get_current_user() -> UserDetailsResponse:
     return {
         "profileId": 1,
         "email": "user@fast.ai",
