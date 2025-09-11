@@ -88,7 +88,7 @@ class GeneratedSitesResponse(BaseModel):
     )
 
 
-class Prompt(BaseModel):
+class SiteGenerationRequest(BaseModel):
     prompt: str
 
     model_config = ConfigDict(

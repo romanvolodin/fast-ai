@@ -2,7 +2,12 @@ from fastapi.responses import StreamingResponse
 from fastapi.routing import APIRouter
 
 from .mocks import mock_generate_html
-from .schemas import CreateSiteRequest, GeneratedSitesResponse, Prompt, SiteResponse
+from .schemas import (
+    CreateSiteRequest,
+    GeneratedSitesResponse,
+    SiteGenerationRequest,
+    SiteResponse,
+)
 
 router = APIRouter(
     prefix="/sites",
@@ -66,7 +71,7 @@ def create_site(site: CreateSiteRequest) -> SiteResponse:
     "/{site_id}/generate",
     summary="Сгенерировать HTML код сайта",
 )
-def generate_site(site_id: int, prompt: Prompt | None = None) -> str:
+def generate_site(site_id: int, prompt: SiteGenerationRequest | None = None) -> str:
     return StreamingResponse(
         content=mock_generate_html(),
         media_type="text/html; charset=utf-8",
